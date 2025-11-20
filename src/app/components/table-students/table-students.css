@@ -1,0 +1,79 @@
+body {
+  margin: 10px;
+  padding: 10px;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 50%;
+}
+
+td, th {
+  width: 20%;
+}
+
+.mat-column-id {
+  width: 10%;
+}
+
+.mat-column-name {
+  width: 15%;
+}
+
+.mat-column-surname {
+  width: 15%;
+}
+
+.mat-column-patronymic {
+  width: 15%;
+}
+
+.mat-column-group {
+  width: 15%;
+}
+
+.mat-column-phoneNumber {
+  width: 15%;
+}
+
+.mat-column-control {
+  width: 30%;
+}
+
+section {
+  display: flex;
+  align-items: center;
+}
+
+.label {
+  font-size: 14px;
+  margin: 0 16px 0 8px;
+  min-width: 120px;
+}
+
+.button-row {
+  max-width: 120px;
+}
+
+.button-row .mat-mdc-button-base {
+  margin: 8px 8px 8px 0;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.button-add {
+  margin: 10px;
+}
+
+.mat-add-btn {
+  background-color: green;
+  color: white;
+}

@@ -1,0 +1,17 @@
+<p>group-page works!</p>
+
+<div class="group-editor">
+
+  <form>
+
+    <select name="group" id="group-combo" [(ngModel)]="selectedGroup">
+      <option value="create">create group</option>
+      @for (group of relationsGroups; track group.id) {
+        <option [value]="group.id">{{group.name}}</option>
+      }
+    </select>
+
+
+    {{selectedGroup}}
+  </form>
+</div>

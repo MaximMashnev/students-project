@@ -1,0 +1,21 @@
+:host {
+  display: flex;
+  justify-content: center;
+}
+
+.register-form{
+  width: 30vw;
+  margin-top: 40px;
+  background-color: var(--form-background-color);
+  border: 1px solid var(--primary-border-color);
+  padding: 45px;
+  border-radius: 4px;
+}
+
+h1 {
+  margin-bottom: 30px;
+}
+
+.inf-text-label {
+  text-decoration: underline;
+}

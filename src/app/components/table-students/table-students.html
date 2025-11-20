@@ -1,0 +1,93 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="flex-container">
+  <mat-form-field>
+    <mat-label>Фильтр</mat-label>
+    <input matInput type="text" (keyup)="applyFilter($event)" placeholder="Введите параметры поиска" #input>
+    @if (input.value) {
+      <button matSuffix matIconButton aria-label="Clear" (click)="input.value=''; applyFilter($event)">
+        <mat-icon>close</mat-icon>
+      </button>
+    }
+  </mat-form-field>
+
+  <div class="button-add">
+    <button matFab extended color="add-btn" (click)="addNewUser()">
+      <mat-icon>note_add</mat-icon>
+      Добавить студента
+    </button>
+  </div>
+</div>
+
+<div class="mat-elevation-z8">
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
+                  [length]="totalItems"
+                  [pageSize]="limit"
+                  (page)="update($event)"
+                  showFirstLastButtons>
+  </mat-paginator>
+  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="surname">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Фамилия </th>
+      <td mat-cell *matCellDef="let row"> {{row.surname}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Имя </th>
+      <td mat-cell *matCellDef="let row"> {{row.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="patronymic">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Отчество </th>
+      <td mat-cell *matCellDef="let row"> {{row.patronymic}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="group">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Группа </th>
+      <td mat-cell *matCellDef="let row"> {{row.group}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="phoneNumber">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Номер телефона </th>
+      <td mat-cell *matCellDef="let row"> {{row.phoneNumber}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="control">
+      <th mat-header-cell *matHeaderCellDef> Панель управления </th>
+      <td mat-cell *matCellDef="let row">
+        <div class="button-row">
+          <div class="flex-container">
+            <button matMiniFab color="warn" aria-label="delete icon" title="Удалить" (click)="delUser(row)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button matMiniFab color="primary" aria-label="edit icon" title="Редактировать" (click)="editUser(row)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">Нет данных, соответствующих фильтру "{{input.value}}"</td>
+    </tr>
+  </table>
+</div>
+
+<ngx-scrolltop
+  mode="classic"
+  theme="blue"
+  [size]="60"
+  position="right"
+>
+  <mat-icon>arrow_upward</mat-icon>
+</ngx-scrolltop>

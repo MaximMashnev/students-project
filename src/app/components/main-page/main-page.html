@@ -1,0 +1,33 @@
+<aside>
+  <div class="user-panel">
+      <span class="fio-user">
+        {{surname}} {{name}} {{patronymic}}
+      </span>
+  </div>
+  <div class="btn-panel">
+    <button class="btn" (click)="goToProfilePage()">
+      <mat-icon>account_circle</mat-icon>
+      Профиль
+    </button>
+
+    <button class="btn" (click)="goToGroupPage()">
+      <mat-icon>group</mat-icon>
+      Группа
+    </button>
+
+    <button class="btn" (click)="goToStudentPage()">
+      <mat-icon>diversity_3</mat-icon>
+      Люди
+    </button>
+  </div>
+
+  <div class="other-block">
+    <button class="btn" (click)="logoutUser()">
+      <mat-icon>logout</mat-icon>
+      Выйти
+    </button>
+  </div>
+</aside>
+<article>
+  <router-outlet></router-outlet>
+</article>

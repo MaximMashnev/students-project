@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>{{dialogTitle}}</h1>
+<div mat-dialog-content style="display: inline; padding: 20px; margin: auto; ">
+
+  <mat-form-field class="full-width-input">
+    <input matInput type="text" placeholder="Фамилия" [value]="editingUser.surname"
+      [(ngModel)]="editingUser.surname" required >
+      @if (validateFormSurname(editingUser.surname) == false) {
+        <mat-error>Поле не может быть пустым и содержать пробелы</mat-error>
+      }
+  </mat-form-field>
+
+  <mat-form-field class="full-width-input">
+    <input matInput type="text" placeholder="Имя" [value]="editingUser.name"
+      [(ngModel)]="editingUser.name" required>
+      @if (validateFormName(editingUser.name) == false) {
+        <mat-error>Поле не может быть пустым и содержать пробелы</mat-error>
+      }
+  </mat-form-field>
+
+  <mat-form-field class="full-width-input">
+    <input matInput type="text" placeholder="Отчество" [value]="editingUser.patronymic"
+      [(ngModel)]="editingUser.patronymic" required>
+      @if (validateFormPatronymic(editingUser.patronymic) == false) {
+        <mat-error>Поле не может быть пустым и содержать пробелы</mat-error>
+      }
+  </mat-form-field>
+
+  <!-- Починить вывод групп -->
+  <mat-form-field class="full-width-input">
+    <input matInput type="text" placeholder="Группа" [value]="editingUser"
+      [(ngModel)]="editingUser" required>
+  </mat-form-field>
+
+  <mat-form-field class="full-width-input">
+    <input matInput type="text" placeholder="Номер телефона" [value]="editingUser.phoneNumber"
+      [(ngModel)]="editingUser.phoneNumber" required>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onNoClick()">Отмена</button>
+  <button class="right-align" mat-raised-button color="primary"
+    [mat-dialog-close]="editingUser" [disabled]="checkValidateConfirm()">{{dialogCloseButton}}</button>
+</div>

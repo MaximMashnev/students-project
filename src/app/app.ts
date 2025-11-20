@@ -1,9 +1,27 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { TableStudents } from "./components/table-students/table-students";
+import { FormsModule } from "@angular/forms";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ProfileCard } from "./components/profile-card/profile-card";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [
+    FormsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    CommonModule,
+    ReactiveFormsModule,
+    RouterOutlet,
+    // TableStudents,
+    // ProfileCard
+],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

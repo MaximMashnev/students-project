@@ -1,0 +1,57 @@
+<form
+  class="register-form"
+  [formGroup]="form"
+  (ngSubmit)="OnSubmit()"
+>
+  <h1 class="h1">Регистрация</h1>
+
+  <label class="inf-text-label">Информация о пользователе</label>
+
+  <label class="st-reg-auth-label">
+    Имя
+    <input
+      formControlName="name"
+      class="st-input" type="text" placeholder="Введите имя">
+  </label>
+
+  <label class="st-reg-auth-label">
+    Фамилия
+    <input
+    formControlName="surname"
+    class="st-input" type="text" placeholder="Введите фамилию">
+  </label>
+
+  <label class="st-reg-auth-label">
+    Отчество
+    <input
+    formControlName="patronymic"
+    class="st-input" type="text" placeholder="Введите отчество">
+  </label>
+
+  <label class="st-reg-auth-label">
+    Номер телефона
+    <input
+    formControlName="phoneNumber"
+    class="st-input" type="tel" placeholder="Введите номер телефона">
+  </label>
+
+  <label class="inf-text-label">Данные для входа</label>
+
+  <label class="st-reg-auth-label">
+    Логин
+    <input
+    formControlName="login"
+    class="st-input" type="text" placeholder="Введите логин">
+  </label>
+
+  <label class="st-reg-auth-label">
+    Пароль
+    <input
+    formControlName="password"
+    class="st-input" type="password" placeholder="Введите пароль">
+  </label>
+
+  <button class="btn" type="submit">Зарегистроваться</button>
+  <label class="inf-text-label">Есть аккаунт?</label>
+  <button class="btn" type="button" (click)="onLogin()">Авторизоваться</button>
+</form>

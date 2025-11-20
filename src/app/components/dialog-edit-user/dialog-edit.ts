@@ -1,0 +1,65 @@
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { FormsModule} from "@angular/forms";
+import { MatDialogModule } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { User } from '../../models/user';
+
+@Component({
+  selector: 'app-dialog-edit',
+  templateUrl: './dialog-edit.html',
+  styleUrl: './dialog-edit.css',
+  imports: [MatFormFieldModule, FormsModule, MatDialogModule, CommonModule, MatInputModule, MatIconModule, MatButtonModule]
+})
+export class DialogEdit implements OnInit {
+  editingUser: User;
+  dialogTitle = 'Добавить студента';
+  dialogCloseButton = 'Добавить';
+  validNameInput = false;
+  validSurnameInput = false;
+  validPatronymicInput = false;
+
+  constructor(public dialogRef: MatDialogRef<DialogEdit>,
+    @Inject(MAT_DIALOG_DATA) public data: User) {
+      this.editingUser = data ? {...data} : new User();
+      if (data) {
+        this.dialogTitle = `Редактирование студента с ID ${data.id}`;
+        this.dialogCloseButton = 'Сохранить';
+      }
+    }
+
+  ngOnInit(): void {
+
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  test(testt: any) {
+    console.log(testt);
+  }
+
+  validateFormName(formValueName: string): boolean {
+    this.validNameInput = /^[a-zA-Zа-яА-Я]+$/.test(formValueName) ? true : false;
+    return this.validNameInput;
+  }
+
+  validateFormSurname(formValueSurname: string): boolean {
+    this.validSurnameInput = /^[a-zA-Zа-яА-Я]+$/.test(formValueSurname) ? true : false;
+    return this.validSurnameInput;
+  }
+
+  validateFormPatronymic(formValuePatronymic: string): boolean {
+    this.validPatronymicInput = /^[a-zA-Zа-яА-Я]+$/.test(formValuePatronymic) ? true : false;
+    return this.validPatronymicInput;
+  }
+
+  checkValidateConfirm(): boolean {
+    return (this.validNameInput && this.validSurnameInput && this.validPatronymicInput) ? false : true;
+  };
+}

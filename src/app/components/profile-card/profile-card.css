@@ -1,0 +1,27 @@
+.info-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-user-data {
+  font-size: 16px;
+  margin: 10px;
+  color: var(--color-text);
+}
+
+.block-info {
+  background: var(--form-background-color);
+  border: 1px solid var(--primary-border-color);
+  border-radius: 4px;
+  padding: 40px;
+  margin-top: 20px;
+}
+
+.title-info {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 18px;
+  color: var(--color-text);
+  text-decoration: underline;
+}

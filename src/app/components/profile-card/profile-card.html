@@ -1,0 +1,43 @@
+<div class="info-container">
+  <div class="user-info-container">
+
+    <div class="block-info">
+      <div class="title-info">
+        Личная информация
+      </div>
+      <div class="info-user-data">
+          Фамилия: {{userData.surname}}
+      </div>
+      <div class="info-user-data">
+          Имя: {{userData.name}}
+      </div>
+      <div class="info-user-data">
+          Отчество: {{userData.patronymic}}
+      </div>
+    </div>
+
+    <div class="block-info">
+      <div class="title-info">
+        Прочая информация
+      </div>
+      <div class="info-user-data">
+          Номер телефона: {{userData.phoneNumber}}
+      </div>
+      <div class="info-user-data">
+          Группа: {{userData.group}}
+      </div>
+    </div>
+
+    <div class="block-info" [hidden]="hideBtn()">
+      <div class="title-info" >
+        Системная информация
+      </div>
+      <div class="info-user-data">
+          Роль: {{userData.role}}
+      </div>
+      <div class="info-user-data">
+          Логин: {{userData.username}}
+      </div>
+    </div>
+  </div>
+</div>

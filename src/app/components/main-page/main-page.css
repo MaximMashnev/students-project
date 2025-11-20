@@ -1,0 +1,55 @@
+:host {
+  display: grid;
+  grid-template-areas: "as ar";
+  grid-template-columns: 200px auto;
+}
+
+aside {
+  grid-area: as;
+  height: 100vh;
+  background: var(--form-background-color);
+  border-right: 1px solid var(--primary-border-color);
+}
+
+article {
+  grid-area: ar;
+  margin: 5px;
+}
+
+.btn-panel {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 100px;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.mat-icon {
+  margin-right: 10px;
+}
+
+.other-block {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.fio-user {
+  display: flex;
+  justify-items: center;
+  text-align: center;
+  margin-top: 30px;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: medium;
+  color: var(--color-text);
+}

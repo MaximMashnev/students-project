@@ -1,0 +1,26 @@
+<form
+  class="auth-form"
+  [formGroup]="form"
+  (ngSubmit)="onLogin()"
+>
+
+  <h1>Авторизация</h1>
+
+  <label class="st-reg-auth-label">
+    Логин
+    <input class="st-input"
+      formControlName="login"
+      type="text" placeholder="Введите логин">
+  </label>
+
+  <label class="st-reg-auth-label">
+    Пароль
+    <input class="st-input"
+    formControlName="password"
+    type="password" placeholder="Введите пароль">
+  </label>
+
+  <button class="btn" type="submit">Войти</button>
+  <label class="inf-text-label">Нет аккаунта?</label>
+  <button class="btn" type="button" (click)="onRegister()">Зарегистроваться</button>
+</form>
