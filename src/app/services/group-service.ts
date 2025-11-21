@@ -21,22 +21,24 @@ export class GroupService {
   }
 
   addNewGroup(Group: Group): Observable<Group> {
-    console.log('addNewGroup: ' + Group);
+    console.log('addNewGroup: ' + Group.name);
     return this.http.post<Group>(this.GroupUrl, Group).pipe();
   }
 
-  deleteGroup(Group: Group): Observable<Group> {
-    console.log("deleteGroup " + Group);
-    return this.http.delete<Group>(this.GroupUrl +`/${Group.id}`);
+  deleteGroup(id: number): Observable<any> {
+    console.log("deleteGroup " + id);
+    return this.http.delete<Group>(this.GroupUrl +`/${id}`);
   }
 
   editingGroup(oldDataGroup: Group, newDataGroup: Group): Observable<Group> {
+    console.log(oldDataGroup);
     if (newDataGroup != null) {
-      newDataGroup.id = oldDataGroup.id;
-      console.log(`editingUser newData: ${newDataGroup.name}`);
+      newDataGroup['id'] = oldDataGroup.id;
+      newDataGroup['user_id'] = oldDataGroup.user_id
+      console.log(`editingUser newData: ${newDataGroup}`);
       return this.http.patch<Group>(this.GroupUrl +`/${oldDataGroup.id}`, newDataGroup);
     } else {
-      return this.http.patch<Group>(this.GroupUrl +`/${oldDataGroup.id}`, oldDataGroup);
+      return this.http.patch<Group>(this.GroupUrl +`/${oldDataGroup.id}`, oldDataGroup.name);
     }
   }
 }

@@ -1,0 +1,25 @@
+.group-settings {
+  display: flexbox;
+  background: var(--form-background-color);
+}
+
+.group-editor {
+  display: inline-flex;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.btn {
+  width: 300px;
+  height: 56px;
+}
+
+.title-block {
+  color: var(--color-text);
+  padding: 10px;
+  font-size: medium;
+}
+
+.mat-mdc-form-field {
+  width: 300px;
+}

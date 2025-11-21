@@ -34,6 +34,7 @@ article {
 
 .mat-icon {
   margin-right: 10px;
+  margin-left: 10px;
 }
 
 .other-block {
@@ -53,3 +54,13 @@ article {
   font-size: medium;
   color: var(--color-text);
 }
+
+.btn-hide {
+  display: flex;
+  justify-items: center;
+  text-align: center;
+}
+
+/* .text-on-btn {
+  display: none;
+} */

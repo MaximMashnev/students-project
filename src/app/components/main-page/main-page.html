@@ -1,4 +1,9 @@
 <aside>
+  <div class="btn-hide">
+    <button class="btn" id="hide-btns">
+      <span class="text-on-btn">Скрыть меню</span>
+    </button>
+  </div>
   <div class="user-panel">
       <span class="fio-user">
         {{surname}} {{name}} {{patronymic}}
@@ -7,24 +12,24 @@
   <div class="btn-panel">
     <button class="btn" (click)="goToProfilePage()">
       <mat-icon>account_circle</mat-icon>
-      Профиль
+      <span class="text-on-btn">Профиль</span>
     </button>
 
     <button class="btn" (click)="goToGroupPage()">
       <mat-icon>group</mat-icon>
-      Группа
+      <span class="text-on-btn">Группа</span>
     </button>
 
     <button class="btn" (click)="goToStudentPage()">
       <mat-icon>diversity_3</mat-icon>
-      Люди
+      <span class="text-on-btn">Люди</span>
     </button>
   </div>
 
   <div class="other-block">
     <button class="btn" (click)="logoutUser()">
       <mat-icon>logout</mat-icon>
-      Выйти
+      <span class="text-on-btn">Выйти</span>
     </button>
   </div>
 </aside>

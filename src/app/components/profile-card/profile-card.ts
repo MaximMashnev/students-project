@@ -17,11 +17,11 @@ export class ProfileCard {
 
   constructor(private router: Router, private titleService: Title, private AuthService: AuthService) {
     this.titleService.setTitle('Профиль');
-    if (sessionStorage.getItem("username")) {
+    if (localStorage.getItem("username")) {
       this.userData = new User();
-      for (let key in sessionStorage) {
-        if (sessionStorage.getItem(key) != null) {
-          this.userData[key] = sessionStorage.getItem(key);
+      for (let key in localStorage) {
+        if (localStorage.getItem(key) != null) {
+          this.userData[key] = localStorage.getItem(key);
         }
       }
     }

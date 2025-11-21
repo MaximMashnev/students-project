@@ -15,7 +15,7 @@ import { User } from '../../models/user';
   styleUrl: './dialog-edit.css',
   imports: [MatFormFieldModule, FormsModule, MatDialogModule, CommonModule, MatInputModule, MatIconModule, MatButtonModule]
 })
-export class DialogEdit implements OnInit {
+export class DialogEdit {
   editingUser: User;
   dialogTitle = 'Добавить студента';
   dialogCloseButton = 'Добавить';
@@ -32,16 +32,8 @@ export class DialogEdit implements OnInit {
       }
     }
 
-  ngOnInit(): void {
-
-  }
-
   onNoClick(): void {
     this.dialogRef.close();
-  }
-
-  test(testt: any) {
-    console.log(testt);
   }
 
   validateFormName(formValueName: string): boolean {

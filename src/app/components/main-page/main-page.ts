@@ -11,9 +11,9 @@ import { MatButtonModule } from "@angular/material/button";
   styleUrl: './main-page.css',
 })
 export class MainPage {
-  name = sessionStorage.getItem("name");
-  surname = sessionStorage.getItem("surname");
-  patronymic = sessionStorage.getItem("patronymic");
+  name = localStorage.getItem("name");
+  surname = localStorage.getItem("surname");
+  patronymic = localStorage.getItem("patronymic");
 
   constructor(private router: Router, private titleService: Title) {
     this.titleService.setTitle("Главная страница")

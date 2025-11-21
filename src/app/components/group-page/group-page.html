@@ -1,17 +1,21 @@
-<p>group-page works!</p>
+<div class="group-settings">
+  <div class="title-block">Настройка групп</div>
+  <div class="group-editor">
+    <mat-form-field class="m8">
+      <mat-select [(ngModel)]="selectedGroupId" name="group" placeholder="Создать группу">
+        <mat-option value="0">Создать группу</mat-option>
+        @for (group of relationsGroups; track group) {
+          <mat-option [value]="group.id">{{group.name}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
 
-<div class="group-editor">
+    <mat-form-field class="m8">
+        <input matInput [value]="getNameGroup()" [(ngModel)]="nameGroup" placeholder="Введите название группы">
+    </mat-form-field>
 
-  <form>
-
-    <select name="group" id="group-combo" [(ngModel)]="selectedGroup">
-      <option value="create">create group</option>
-      @for (group of relationsGroups; track group.id) {
-        <option [value]="group.id">{{group.name}}</option>
-      }
-    </select>
-
-
-    {{selectedGroup}}
-  </form>
+    <button class="btn m8" (click)="saveOrEditGroup()">{{saveEditBtn}}</button>
+    <button class="btn m8" (click)="deleteGroup()" [disabled]="btnDisabled">Удалить</button>
+  </div>
 </div>
+
