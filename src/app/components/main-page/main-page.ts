@@ -14,6 +14,7 @@ export class MainPage {
   name = localStorage.getItem("name");
   surname = localStorage.getItem("surname");
   patronymic = localStorage.getItem("patronymic");
+  role = localStorage.getItem("role");
 
   constructor(private router: Router, private titleService: Title) {
     this.titleService.setTitle("Главная страница")
@@ -33,6 +34,7 @@ export class MainPage {
 
   logoutUser() {
     localStorage.removeItem("Bearer");
+    localStorage.clear();
     this.router.navigate(["/auth"])
   }
 }

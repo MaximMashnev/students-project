@@ -25,3 +25,15 @@
   color: var(--color-text);
   text-decoration: underline;
 }
+
+.edit-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.mat-icon {
+  margin-right: 10px;
+  margin-left: 10px;
+}

@@ -5,10 +5,11 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
   selector: 'app-profile-card',
-  imports: [MatCardModule, MatFormFieldModule],
+  imports: [MatCardModule, MatFormFieldModule, MatIconModule],
   templateUrl: './profile-card.html',
   styleUrl: './profile-card.css',
 })
@@ -24,6 +25,11 @@ export class ProfileCard {
           this.userData[key] = localStorage.getItem(key);
         }
       }
+      this.AuthService.getMyInfo().subscribe({
+        next: (data) => {
+          localStorage.setItem('group_name', data['0'].group.name)
+        }
+      })
     }
     else {
       this.getInfoAboutUser();
@@ -42,11 +48,11 @@ export class ProfileCard {
   }
 
   hideBtn() {
-    if (this.userData.role = "student") {
-      return true;
+    if (this.userData.role == "student") {
+      return false;
     }
     else {
-      return false;
+      return true;
     }
   }
 }

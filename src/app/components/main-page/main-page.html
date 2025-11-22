@@ -1,9 +1,10 @@
 <aside>
-  <div class="btn-hide">
+  <!-- <div class="btn-hide">
     <button class="btn" id="hide-btns">
-      <span class="text-on-btn">Скрыть меню</span>
+      <mat-icon><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4B77D1"><path d="M440-280v-400L240-480l200 200Zm80 160h80v-720h-80v720Z"/></svg></mat-icon>
+      <span class="text-on-btn">Свернуть меню</span>
     </button>
-  </div>
+  </div> -->
   <div class="user-panel">
       <span class="fio-user">
         {{surname}} {{name}} {{patronymic}}
@@ -20,7 +21,7 @@
       <span class="text-on-btn">Группа</span>
     </button>
 
-    <button class="btn" (click)="goToStudentPage()">
+    <button class="btn" (click)="goToStudentPage()" [style.visibility]="role == 'admin' ? 'visibility' : 'hidden'">
       <mat-icon>diversity_3</mat-icon>
       <span class="text-on-btn">Люди</span>
     </button>

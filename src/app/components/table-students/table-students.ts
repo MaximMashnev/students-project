@@ -1,13 +1,13 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatPaginatorModule, PageEvent} from '@angular/material/paginator';
-import {MatSort, MatSortModule} from '@angular/material/sort';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatDialog } from '@angular/material/dialog';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatButtonModule} from '@angular/material/button';
+import { MatIconModule} from '@angular/material/icon';
+import { MatDividerModule} from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
 import { ChangeDetectionStrategy } from "@angular/core";
 import { Sort } from '@angular/material/sort';
 import { NgxScrollTopComponent } from "ngx-scrolltop";
@@ -40,8 +40,12 @@ export class TableStudents implements AfterViewInit {
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
 
-  constructor(private baseService: BaseService,
-    public dialog: MatDialog, private titleService: Title) {
+  constructor(
+    private baseService: BaseService,
+    public dialog: MatDialog,
+    private titleService: Title,
+    private cdr: ChangeDetectorRef
+  ) {
       this.titleService.setTitle("Таблица студентов");
       this.loadData();
   }
@@ -62,6 +66,7 @@ export class TableStudents implements AfterViewInit {
       this.totalItems = data.meta.total_items;
       this.page = data.meta.total_pages;
       this.limit = data.meta.per_page;
+      this.cdr.detectChanges();
     });
   }
 

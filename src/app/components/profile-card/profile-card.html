@@ -24,11 +24,11 @@
           Номер телефона: {{userData.phoneNumber}}
       </div>
       <div class="info-user-data">
-          Группа: {{userData.group}}
+          Группа: {{userData.group_name}}
       </div>
     </div>
 
-    <div class="block-info" [hidden]="hideBtn()">
+    <div class="block-info" [style.visibility]="hideBtn() ? 'visibility': 'hidden'">
       <div class="title-info" >
         Системная информация
       </div>
@@ -39,5 +39,13 @@
           Логин: {{userData.username}}
       </div>
     </div>
+
+    <div class="edit-btn">
+      <button class="btn">
+        Редактировать
+      </button>
+    </div>
+
   </div>
 </div>
+
