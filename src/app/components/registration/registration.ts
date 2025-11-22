@@ -1,8 +1,7 @@
 import { Title } from '@angular/platform-browser';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AuthService } from '../../services/auth-service';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,9 +11,15 @@ import { Router } from '@angular/router';
   styleUrl: './registration.css',
 })
 export class Registration implements OnInit {
+  errorMessage: string = "";
+  isError: boolean = false;
 
-  constructor(private AuthService: AuthService,
-    private router: Router, private TitleService: Title) {
+  constructor(
+    private AuthService: AuthService,
+    private router: Router,
+    private TitleService: Title,
+    private cdr: ChangeDetectorRef
+  ) {
     this.TitleService.setTitle('Регистрация')
   }
 
@@ -36,6 +41,7 @@ export class Registration implements OnInit {
   })
 
   OnSubmit(): void {
+    this.isError = false;
     console.log(this.form.value);
     this.AuthService.registerUser(this.form.value.login!, this.form.value.password!,
       this.form.value.name!, this.form.value.surname!,
@@ -47,6 +53,9 @@ export class Registration implements OnInit {
         this.router.navigate(['/main']);
       },
       error: (error) => {
+        this.isError = true;
+        this.errorMessage = error.error.message;
+        this.cdr.detectChanges();
         console.error('Login failed', error);
       }
     });

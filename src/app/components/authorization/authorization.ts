@@ -1,6 +1,6 @@
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
-import { AfterContentInit, Component, OnInit } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -30,8 +30,15 @@ export class Authorization implements AfterContentInit {
     login: new FormControl(""),
     password: new FormControl("")
   })
+  errorMessage: string = "";
+  isError: boolean = false;
 
-  constructor(private router: Router, private titleService: Title, private AuthService: AuthService) {
+  constructor(
+    private router: Router,
+    private titleService: Title,
+    private AuthService: AuthService,
+    private cdr: ChangeDetectorRef,
+  ) {
     this.titleService.setTitle('Авторизация');
   }
 
@@ -43,6 +50,7 @@ export class Authorization implements AfterContentInit {
   }
 
   onLogin(): void {
+    this.isError = false;
     console.log('Login attempt:', this.form.value.login, this.form.value.password!);
 
     this.AuthService.getToken(this.form.value.login!, this.form.value.password!).subscribe({
@@ -56,6 +64,9 @@ export class Authorization implements AfterContentInit {
         this.router.navigate(['/main']);
       },
       error: (error) => {
+        this.isError = true;
+        this.errorMessage = error.error.message;
+        this.cdr.detectChanges();
         console.error('Login failed', error);
       }
     });
@@ -65,5 +76,4 @@ export class Authorization implements AfterContentInit {
     console.log("registration")
     this.router.navigate(['/registration']);
   }
-
 }

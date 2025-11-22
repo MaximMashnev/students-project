@@ -6,6 +6,10 @@
 
   <h1>Авторизация</h1>
 
+  <div class="alert error" [style.visibility]="isError ? 'visibility': 'hidden'">
+    {{errorMessage}}
+  </div>
+
   <label class="st-reg-auth-label">
     Логин
     <input class="st-input"

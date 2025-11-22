@@ -31,16 +31,28 @@ export class AuthService {
           "surname": surname,
           "patronymic": patronymic,
           "phoneNumber": phoneNumber,
-          "groupIds": "",
-          "group": ""
+          "group_id": [],
       });
   }
 
   getUserInfo(): Observable<any> {
     return this.http.get(
-      this.baseUrl + "auth_me", {
-        headers : {'Authorization': "Bearer " + localStorage.getItem("Bearer")}
-      }
+      this.baseUrl + "auth_me"
+    )
+    // const userInfo = this.http.get(
+    //   this.baseUrl + "auth_me"
+    // )
+
+    // console.log(userInfo);
+
+    // return this.http.get(
+    //   this.baseUrl + '_relations=groups&id=' + userInfo
+    // )
+  }
+
+  getMyInfo(): Observable<any> {
+    return this.http.get(
+      this.baseUrl + 'users?_relations=groups&id=' + localStorage.getItem("id")
     )
   }
 }
