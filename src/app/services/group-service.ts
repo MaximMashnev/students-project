@@ -2,6 +2,7 @@ import { Group } from './../models/group';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -9,20 +10,29 @@ import { Observable } from 'rxjs';
 export class GroupService {
 
   private GroupUrl = 'https://c68b6a416d126ef6.mokky.dev/groups'
+  private MyGroupUrl = "https://c68b6a416d126ef6.mokky.dev/users"
 
   constructor(private http: HttpClient) { }
+
+  // getMyGroup(userGroupId: number): Observable<any> {
+  //   return this.http.get<any>(this.GroupUrl + "?_relations=users&id=" + userGroupId);
+  // }
+
+  getMyGroup(userGroupId: number): Observable<any> {
+    return this.http.get<any>(this.MyGroupUrl + "?_relations=groups&group_id=" + userGroupId);
+  }
 
   getStudentsGroup(): Observable<Group> {
     return this.http.get<Group>(this.GroupUrl + "?_relations=user");
   }
 
   getAllGroups(): Observable<any>{
-    return this.http.get<any[]>(this.GroupUrl).pipe();
+    return this.http.get<any[]>(this.GroupUrl);
   }
 
   addNewGroup(Group: Group): Observable<Group> {
     console.log('addNewGroup: ' + Group.name);
-    return this.http.post<Group>(this.GroupUrl, Group).pipe();
+    return this.http.post<Group>(this.GroupUrl, Group);
   }
 
   deleteGroup(id: number): Observable<any> {

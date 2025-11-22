@@ -84,3 +84,20 @@ h1 {
 .m8 {
   margin: 8px;
 }
+
+.alert {
+  display: block;
+  border-radius: 4px;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.error {
+  background-color: red;
+  color: white;
+}
+
+.success {
+  background-color: green;
+  color: white;
+}

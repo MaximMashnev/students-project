@@ -35,7 +35,7 @@ export class BaseService {
     else if (/[0-9]/.test(find)) {
       url += `?id=${find}&page=${page}&limit=${limit}&sortBy=${sortdata}`;
     }
-    // ToDo: переписать под name, surname и т.д. find[1]
+    // todo: переписать под name, surname и т.д. find[1]
     // Поиск по ФИО
     else if (find.split(' ').length >= 2) {
       url += `?fio=${find}&page=${page}&limit=${limit}&sortBy=${sortdata}`;
@@ -44,6 +44,10 @@ export class BaseService {
     else {
       url += `?page=${page}&limit=${limit}&sortBy=${sortdata}`;
     }
+    // Пользователи с группами
+    // else {
+    //   url += '?_relations=groups';
+    // }
 
     return this.http.get<any[]>(url).pipe();
   }
