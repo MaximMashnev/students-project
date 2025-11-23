@@ -8,12 +8,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { User } from '../../models/user';
+import { MatOption } from "@angular/material/select";
+import { MatSelectModule} from '@angular/material/select';
 
 @Component({
   selector: 'app-dialog-edit',
   templateUrl: './dialog-edit.html',
   styleUrl: './dialog-edit.css',
-  imports: [MatFormFieldModule, FormsModule, MatDialogModule, CommonModule, MatInputModule, MatIconModule, MatButtonModule]
+  imports: [
+    MatFormFieldModule, FormsModule, MatDialogModule,
+    CommonModule, MatInputModule, MatIconModule,
+    MatButtonModule, MatOption, MatSelectModule
+  ]
 })
 export class DialogEdit {
   editingUser: User;
@@ -22,6 +28,25 @@ export class DialogEdit {
   validNameInput = false;
   validSurnameInput = false;
   validPatronymicInput = false;
+
+  // TODO: сделать похожее с установкой группы
+  ROLES = [
+    {
+      "id" : 0,
+      "role" : "admin",
+      "name_ru" : "Администратор",
+    },
+    {
+      "id" : 1,
+      "role" : "teacher",
+      "name_ru" : "Преподователь",
+    },
+    {
+      "id" : 2,
+      "role" : "student",
+      "name_ru" : "Студент",
+    }
+  ]
 
   constructor(public dialogRef: MatDialogRef<DialogEdit>,
     @Inject(MAT_DIALOG_DATA) public data: User) {
