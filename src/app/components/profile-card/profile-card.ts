@@ -16,8 +16,12 @@ import { MatIconModule } from "@angular/material/icon";
 export class ProfileCard {
   userData!: any;
 
-  constructor(private router: Router, private titleService: Title, private AuthService: AuthService) {
+  constructor(private router: Router, private titleService: Title, private authService: AuthService) {
     this.titleService.setTitle('Профиль');
+    this.setLocalStorage();
+  }
+
+  setLocalStorage() {
     if (localStorage.getItem("username")) {
       this.userData = new User();
       for (let key in localStorage) {
@@ -25,8 +29,9 @@ export class ProfileCard {
           this.userData[key] = localStorage.getItem(key);
         }
       }
-      this.AuthService.getMyInfo().subscribe({
+      this.authService.getMyInfo().subscribe({
         next: (data) => {
+          console.log(data);
           localStorage.setItem('group_name', data['0'].group.name)
         }
       })
@@ -37,7 +42,7 @@ export class ProfileCard {
   }
 
   getInfoAboutUser() {
-    this.AuthService.getUserInfo().subscribe({
+    this.authService.getUserInfo().subscribe({
       next: (userData) => {
         this.userData = userData;
       },
@@ -47,12 +52,8 @@ export class ProfileCard {
     })
   }
 
-  hideBtn() {
-    if (this.userData.role == "student") {
-      return false;
-    }
-    else {
-      return true;
-    }
+  //можно попробовать вынести в новый сервис
+  hasRole(role: string) {
+    return localStorage.getItem('role') === role;
   }
 }
