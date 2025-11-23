@@ -11,24 +11,28 @@
       </span>
   </div>
   <div class="btn-panel">
-    <button class="btn" (click)="goToProfilePage()">
+    <!-- <button class="btn" (click)="goToProfilePage()"> -->
+    <button class="btn" routerLink="profile" routerLinkActive="active-link">
       <mat-icon>account_circle</mat-icon>
       <span class="text-on-btn">Профиль</span>
     </button>
 
-    <button class="btn" (click)="goToGroupPage()">
+    <button class="btn" routerLink="group" routerLinkActive="active-link">
       <mat-icon>group</mat-icon>
       <span class="text-on-btn">Группа</span>
     </button>
 
-    <button class="btn" (click)="goToStudentPage()" [style.visibility]="role == 'admin' ? 'visibility' : 'hidden'">
-      <mat-icon>diversity_3</mat-icon>
-      <span class="text-on-btn">Люди</span>
-    </button>
+    @if (hasRole("admin")) {
+      <button class="btn" routerLink="students" routerLinkActive="active-link">
+        <mat-icon>diversity_3</mat-icon>
+        <span class="text-on-btn">Люди</span>
+      </button>
+    }
+
   </div>
 
   <div class="other-block">
-    <button class="btn" (click)="logoutUser()">
+    <button class="btn" (click)="logoutUser()" routerLink="auth" routerLinkActive="active-link">
       <mat-icon>logout</mat-icon>
       <span class="text-on-btn">Выйти</span>
     </button>

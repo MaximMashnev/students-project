@@ -1,12 +1,12 @@
 import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet, RouterLinkWithHref, RouterLinkActive } from '@angular/router';
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 
 @Component({
   selector: 'app-main-page',
-  imports: [RouterOutlet, MatIconModule, MatButtonModule],
+  imports: [RouterOutlet, MatIconModule, MatButtonModule, RouterLinkWithHref, RouterLinkActive],
   templateUrl: './main-page.html',
   styleUrl: './main-page.css',
 })
@@ -18,23 +18,22 @@ export class MainPage {
 
   constructor(private router: Router, private titleService: Title) {
     this.titleService.setTitle("Главная страница")
+    this.isLogin();
   }
 
-  goToProfilePage() {
-    this.router.navigate(["main/profile"]);
-  }
-
-  goToStudentPage() {
-    this.router.navigate(["main/students"]);
-  }
-
-  goToGroupPage() {
-    this.router.navigate(["main/group"]);
+  isLogin () {
+    if (!localStorage.getItem("Bearer")) {
+      this.router.navigate(['/auth']);
+    }
   }
 
   logoutUser() {
     localStorage.removeItem("Bearer");
     localStorage.clear();
-    this.router.navigate(["/auth"])
+  }
+
+  //можно попробовать вынести в новый сервис
+  hasRole(role: string) {
+    return localStorage.getItem('role') === role;
   }
 }
