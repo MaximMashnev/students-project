@@ -55,7 +55,7 @@ export class GroupPage implements OnInit {
     }
   }
 
-  getNameGroup(): string {
+  editNameGroup(): string {
     if (this.selectedGroupId != 0) {
       this.saveEditBtn = "Сохранить";
       this.btnDisabled = false;

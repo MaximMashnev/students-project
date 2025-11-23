@@ -15,5 +15,5 @@ export class User {
   surname: string;
   patronymic: string;
   phoneNumber: string;
-  group_id?: number[];
+  group_id!: number[];
 }

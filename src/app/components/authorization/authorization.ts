@@ -43,6 +43,7 @@ export class Authorization implements AfterContentInit {
   }
 
   ngAfterContentInit(): void {
+    //  TODO: не перебрасывать на страницу с авторизацией, если токен равен undefined
     const token = localStorage.getItem("Bearer");
     if (token) {
       this.router.navigate(['/main']);
@@ -50,6 +51,7 @@ export class Authorization implements AfterContentInit {
   }
 
   onLogin(): void {
+    // TODO: изменить сохранение данных, т.к. localStorage можно легко редачить
     this.isError = false;
     console.log('Login attempt:', this.form.value.login, this.form.value.password!);
 

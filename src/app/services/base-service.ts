@@ -19,6 +19,7 @@ export class BaseService {
 
   getDataTable(find: string, page: number, limit: number, sortdata: string): Observable<any> {
     console.log("find: " + find.length);
+    page += 1;
 
     let url = this.UsersUrl;
     // const params = `?page=${page}&limit=${limit}&sortBy=${sortdata}`;
@@ -35,13 +36,14 @@ export class BaseService {
     else if (/[0-9]/.test(find)) {
       url += `?id=${find}&page=${page}&limit=${limit}&sortBy=${sortdata}`;
     }
-    // todo: переписать под name, surname и т.д. find[1]
+    // TODO: переписать под name, surname и т.д. find[1]
     // Поиск по ФИО
     else if (find.split(' ').length >= 2) {
       url += `?fio=${find}&page=${page}&limit=${limit}&sortBy=${sortdata}`;
     }
     // Без поиска
     else {
+      console.log(page);
       url += `?page=${page}&limit=${limit}&sortBy=${sortdata}`;
     }
     // Пользователи с группами
@@ -49,12 +51,12 @@ export class BaseService {
     //   url += '?_relations=groups';
     // }
 
-    return this.http.get<any[]>(url).pipe();
+    return this.http.get<any[]>(url);
   }
 
   addNewUser(User: User): Observable<User> {
     console.log('addNewUser: ' + User);
-    return this.http.post<User>(this.UsersUrl, User).pipe();
+    return this.http.post<User>(this.UsersUrl, User);
   }
 
   deleteUser(User: User): Observable<User> {
@@ -67,7 +69,8 @@ export class BaseService {
       newUserData.id = UserData.id;
       console.log(`editingUser newData: ${newUserData} | ${newUserData}`);
       return this.http.patch<User>(this.UsersUrl +`/${UserData.id}`, newUserData);
-    } else {
+    }
+    else {
       return this.http.patch<User>(this.UsersUrl +`/${UserData.id}`, UserData);
     }
   }

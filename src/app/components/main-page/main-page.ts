@@ -22,7 +22,9 @@ export class MainPage {
   }
 
   isLogin () {
-    if (!localStorage.getItem("Bearer")) {
+    const token = localStorage.getItem("Bearer");
+    //  TODO: перебрасывать на страницу с авторизацией, если токен равен undefined
+    if (!token) {
       this.router.navigate(['/auth']);
     }
   }

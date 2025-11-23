@@ -44,7 +44,6 @@ export class GroupService {
     console.log(oldDataGroup);
     if (newDataGroup != null) {
       newDataGroup['id'] = oldDataGroup.id;
-      newDataGroup['user_id'] = oldDataGroup.user_id
       console.log(`editingUser newData: ${newDataGroup}`);
       return this.http.patch<Group>(this.GroupUrl +`/${oldDataGroup.id}`, newDataGroup);
     } else {

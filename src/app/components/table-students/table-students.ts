@@ -64,7 +64,6 @@ export class TableStudents implements AfterViewInit {
       console.log(data);
       this.dataSource = new MatTableDataSource(data.items);
       this.totalItems = data.meta.total_items;
-      this.page = data.meta.total_pages;
       this.limit = data.meta.per_page;
       this.cdr.detectChanges();
     });
