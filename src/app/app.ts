@@ -19,8 +19,6 @@ import { ProfileCard } from "./components/profile-card/profile-card";
     CommonModule,
     ReactiveFormsModule,
     RouterOutlet,
-    // TableStudents,
-    // ProfileCard
 ],
   templateUrl: './app.html',
   styleUrl: './app.css'

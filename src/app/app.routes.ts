@@ -10,12 +10,12 @@ export const routes: Routes = [
   { path: 'main', component: MainPage,
     children: [
       { path: 'students', component: TableStudents },
-      { path: 'profile', component: ProfileCard},
-      { path: 'group', component: GroupPage}
+      { path: 'profile', component: ProfileCard },
+      { path: 'group', component: GroupPage }
     ]
   },
   { path: 'auth', component: Authorization },
   { path: 'registration', component: Registration},
-  // { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
   { path: '**', redirectTo: 'auth' }
 ];

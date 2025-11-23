@@ -55,4 +55,5 @@ export class AuthService {
       this.baseUrl + 'users?_relations=groups&id=' + localStorage.getItem("id")
     )
   }
+
 }
