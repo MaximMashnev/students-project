@@ -1,4 +1,4 @@
-import { Component, Inject} from '@angular/core';
+import { Component, Inject, ChangeDetectorRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef,  MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { FormsModule} from "@angular/forms";
@@ -22,6 +22,7 @@ import { MatSelectModule, MatOption } from '@angular/material/select';
 
 export class DialogEdit {
   editingUser: User;
+  user: any;
   dialogTitle = 'Добавить студента';
   dialogCloseButton = 'Добавить';
   validNameInput = false;
@@ -46,11 +47,22 @@ export class DialogEdit {
     }
   ]
 
-  constructor(public dialogRef: MatDialogRef<DialogEdit>,
+  constructor(
+    public dialogRef: MatDialogRef<DialogEdit>,
     @Inject(MAT_DIALOG_DATA) public data: User) {
       this.editingUser = data ? {...data} : new User();
+      this.user = data;
       if (data) {
-        this.dialogTitle = `Редактирование студента с ID ${data.id}`;
+        if (this.editingUser.group_id === undefined) {
+          this.dialogTitle = `Редактирование профиля`;
+          console.log(this.user.group.id);
+          this.editingUser.group_id = this.user.group.id;
+          delete this.user.group;
+          this.editingUser = this.user;
+        }
+        else {
+          this.dialogTitle = `Редактирование пользователя с ID ${this.editingUser.id}`;
+        }
         this.dialogCloseButton = 'Сохранить';
       }
     }

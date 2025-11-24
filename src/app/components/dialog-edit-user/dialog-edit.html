@@ -25,24 +25,29 @@
       }
   </mat-form-field>
 
-  <!-- Починить вывод групп -->
-  <mat-form-field class="full-width-input">
-    <input matInput type="text" placeholder="Группа" [value]="editingUser.group_id.toString()"
-      [(ngModel)]="editingUser.group_id" required>
-  </mat-form-field>
+  @if (editingUser.role == "admin") {
+    <!-- TODO: сделать комбо бокс для выбора группы -->
+    <!-- TODO: Починить вывод групп \ запись идет строкой, а не массивом -->
+    <mat-form-field class="full-width-input">
+      <input matInput type="text" placeholder="Группа" [value]="editingUser.group_id.toLocaleString()"
+        [(ngModel)]="editingUser.group_id" required>
+    </mat-form-field>
+  }
 
   <mat-form-field class="full-width-input">
     <input matInput type="text" placeholder="Номер телефона" [value]="editingUser.phoneNumber"
       [(ngModel)]="editingUser.phoneNumber" required>
   </mat-form-field>
 
-  <mat-form-field class="full-width-input">
-    <mat-select [(ngModel)]="editingUser.role" placeholder="Группа пользователя">
-        @for (role of ROLES; track role.id) {
-          <mat-option [value]="role.role">{{role.name_ru}}</mat-option>
-        }
-    </mat-select>
-  </mat-form-field>
+  @if (editingUser.role == "admin") {
+    <mat-form-field class="full-width-input">
+      <mat-select [(ngModel)]="editingUser.role" placeholder="Группа пользователя">
+          @for (role of ROLES; track role.id) {
+            <mat-option sele [value]="role.role">{{role.name_ru}}</mat-option>
+          }
+      </mat-select>
+    </mat-form-field>
+  }
 </div>
 <div mat-dialog-actions>
   <button mat-raised-button (click)="onNoClick()">Отмена</button>
