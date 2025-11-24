@@ -1,3 +1,4 @@
+import { GroupService } from './../../services/group-service';
 import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -15,6 +16,8 @@ import { Title } from '@angular/platform-browser';
 import { User } from '../../models/user';
 import { DialogEdit } from '../dialog-edit-user/dialog-edit';
 import { BaseService } from '../../services/base-service';
+import { MatOption, MatSelectModule } from "@angular/material/select";
+import { FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-table-students',
@@ -25,6 +28,7 @@ import { BaseService } from '../../services/base-service';
     MatFormFieldModule, MatInputModule, MatTableModule,
     MatSortModule, MatPaginatorModule, MatButtonModule,
     MatDividerModule, MatIconModule, NgxScrollTopComponent,
+    MatSelectModule, MatOption, FormsModule,
 ],
 })
 export class TableStudents implements AfterViewInit {
@@ -33,9 +37,11 @@ export class TableStudents implements AfterViewInit {
   page = 0;
   limit = 5;
   totalItems!: number;
-  filterValue = "";
+  filterValue: string = "";
   defSort: Sort = { active: 'id', direction: 'asc' };
   timeout: any;
+  selectedGroup: any;
+  groups: any;
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
@@ -44,10 +50,12 @@ export class TableStudents implements AfterViewInit {
     private baseService: BaseService,
     public dialog: MatDialog,
     private titleService: Title,
+    private groupService: GroupService,
     private cdr: ChangeDetectorRef
   ) {
       this.titleService.setTitle("Таблица студентов");
       this.loadData();
+      this.getGroupInfo();
   }
 
   ngAfterViewInit() {
@@ -56,17 +64,24 @@ export class TableStudents implements AfterViewInit {
     setTimeout(() => this.paginator!.length = this.totalItems);
   }
 
+  getGroupInfo() {
+    this.groupService.getStudentsGroup().subscribe(data => {
+      this.groups = data;
+    });
+  }
+
   loadData(page: number = this.page, limit: number = this.limit) {
     const sortField = this.getSortField();
     const filter = this.filterValue?.trim() || '';
 
-    this.baseService.getDataTable(filter, page, limit, sortField).subscribe(data => {
+    this.baseService.getDataTable(filter, page, limit, sortField, this.selectedGroup).subscribe(data => {
       console.log(data);
       this.dataSource = new MatTableDataSource(data.items);
       this.totalItems = data.meta.total_items;
       this.limit = data.meta.per_page;
       this.cdr.detectChanges();
     });
+
   }
 
   getSortField(): string {
@@ -90,14 +105,13 @@ export class TableStudents implements AfterViewInit {
     this.paginator?.firstPage();
   }
 
-  applyFilter(filter: Event) {
+  applyFilter() {
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
-      this.filterValue = (filter.target as HTMLInputElement).value;
+      this.getGroupInfo();
       this.loadData();
       this.paginator?.firstPage();
     }, 1000);
-
   }
 
   openDialogEditAndAdd(UserData: User | any) {

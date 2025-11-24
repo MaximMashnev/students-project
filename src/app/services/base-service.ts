@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { Observable } from 'rxjs/internal/Observable';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, throwError } from 'rxjs';
-import { Group } from '../models/group';
 
 @Injectable({
   providedIn: 'root'
@@ -17,39 +15,45 @@ export class BaseService {
   ) { }
 
 
-  getDataTable(find: string, page: number, limit: number, sortdata: string): Observable<any> {
+  getDataTable(find: string, page: number, limit: number, sortdata: string, secectedGroup: string): Observable<any> {
     console.log("find: " + find.length);
     page += 1;
 
-    let url = this.UsersUrl;
-    // const params = `?page=${page}&limit=${limit}&sortBy=${sortdata}`;
+    let url = this.UsersUrl + "?";
 
     // Поиск по номеру
+    console.log(secectedGroup);
+    if (secectedGroup != undefined && secectedGroup != '0') {
+      url += `group_id=${secectedGroup}&`
+    }
+
     if ((/[0-9]/.test(find)) && find.includes("+")) {
-      url += `?phoneNumber=${find}&page=${page}&limit=${limit}&sortBy=${sortdata}`;
+      url += `phoneNumber=${find}&page=${page}&limit=${limit}&sortBy=${sortdata}`;
     }
     // Поиск по группе
     else if (find.length >= 4 && find.includes("-")) {
-      url += `?group=${find}&page=${page}&limit=${limit}&sortBy=${sortdata}`;
+      url += `group=${find}&page=${page}&limit=${limit}&sortBy=${sortdata}`;
     }
     // Поиск по id
     else if (/[0-9]/.test(find)) {
-      url += `?id=${find}&page=${page}&limit=${limit}&sortBy=${sortdata}`;
+      url += `id=${find}&page=${page}&limit=${limit}&sortBy=${sortdata}`;
     }
-    // TODO: переписать под name, surname и т.д. find[1]
-    // Поиск по ФИО
-    else if (find.split(' ').length >= 2) {
-      url += `?fio=${find}&page=${page}&limit=${limit}&sortBy=${sortdata}`;
+    // Поиск по фио
+    else if (find.split(' ').length == 3) {
+      url += `surname=${find.split(' ')[0]}&name=${find.split(' ')[1]}&patronymic=${find.split(' ')[2]}&page=${page}&limit=${limit}&sortBy=${sortdata}`;
+    }
+    // Поиск по имени и фамилии
+    else if (find.split(' ').length == 2) {
+      url += `surname=${find.split(' ')[0]}&name=${find.split(' ')[1]}&page=${page}&limit=${limit}&sortBy=${sortdata}`;
+    }
+    // Поиск по фамилии
+    else if (find != '') {
+      url += `surname=${find}&page=${page}&limit=${limit}&sortBy=${sortdata}`;
     }
     // Без поиска
     else {
-      console.log(page);
-      url += `?page=${page}&limit=${limit}&sortBy=${sortdata}`;
+      url += `page=${page}&limit=${limit}&sortBy=${sortdata}`;
     }
-    // Пользователи с группами
-    // else {
-    //   url += '?_relations=groups';
-    // }
 
     return this.http.get<any[]>(url);
   }

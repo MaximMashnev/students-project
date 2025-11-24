@@ -2,19 +2,30 @@
 
 <div class="flex-container">
   <mat-form-field>
-    <mat-label>Фильтр</mat-label>
-    <input matInput type="text" (keyup)="applyFilter($event)" placeholder="Введите параметры поиска" #input>
-    @if (input.value) {
-      <button matSuffix matIconButton aria-label="Clear" (click)="input.value=''; applyFilter($event)">
-        <mat-icon>close</mat-icon>
-      </button>
-    }
+      <mat-label>Фильтр</mat-label>
+      <input matInput type="text" [(ngModel)]="filterValue" (ngModelChange)="applyFilter()" placeholder="Введите параметры поиска" #input>
+      @if (input.value) {
+        <button matSuffix matIconButton aria-label="Clear" (click)="filterValue = ''; applyFilter()">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
   </mat-form-field>
+
+  <div class="group-select-container">
+    <mat-form-field class="full-width">
+      <mat-select [(ngModel)]="selectedGroup" placeholder="Выберите группу" (selectionChange)="applyFilter()">
+        <mat-option [value]="0">-</mat-option>
+        @for (group of groups; track group.id) {
+          <mat-option [value]="group.id">{{group.name}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
 
   <div class="button-add">
     <button matFab extended color="add-btn" (click)="addNewUser()">
       <mat-icon>note_add</mat-icon>
-      Добавить студента
+      Добавить пользователя
     </button>
   </div>
 </div>
@@ -49,8 +60,8 @@
     </ng-container>
 
     <ng-container matColumnDef="group">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Группа </th>
-      <td mat-cell *matCellDef="let row"> {{row.group_id}} </td>
+      <th mat-header-cell *matHeaderCellDef> Группа </th>
+      <td mat-cell *matCellDef="let row"> {{groups[row.group_id-1].name}} </td>
     </ng-container>
 
     <ng-container matColumnDef="phoneNumber">
