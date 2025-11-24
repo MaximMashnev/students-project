@@ -33,11 +33,15 @@ td, th {
 }
 
 .mat-column-group {
-  width: 15%;
+  width: 10%;
 }
 
 .mat-column-phoneNumber {
-  width: 15%;
+  width: 10%;
+}
+
+.mat-column-role {
+  width: 10%;
 }
 
 .mat-column-control {
