@@ -1,15 +1,13 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject} from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef,  MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { FormsModule} from "@angular/forms";
-import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { User } from '../../models/user';
-import { MatOption } from "@angular/material/select";
-import { MatSelectModule} from '@angular/material/select';
+import { MatSelectModule, MatOption } from '@angular/material/select';
 
 @Component({
   selector: 'app-dialog-edit',
@@ -21,6 +19,7 @@ import { MatSelectModule} from '@angular/material/select';
     MatButtonModule, MatOption, MatSelectModule
   ]
 })
+
 export class DialogEdit {
   editingUser: User;
   dialogTitle = 'Добавить студента';
@@ -29,7 +28,6 @@ export class DialogEdit {
   validSurnameInput = false;
   validPatronymicInput = false;
 
-  // TODO: сделать похожее с установкой группы
   ROLES = [
     {
       "id" : 0,
@@ -39,7 +37,7 @@ export class DialogEdit {
     {
       "id" : 1,
       "role" : "teacher",
-      "name_ru" : "Преподователь",
+      "name_ru" : "Преподаватель",
     },
     {
       "id" : 2,

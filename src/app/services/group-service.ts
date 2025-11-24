@@ -26,9 +26,9 @@ export class GroupService {
     return this.http.get<Group>(this.GroupUrl + "?_relations=user");
   }
 
-  getAllGroups(): Observable<any>{
-    return this.http.get<any[]>(this.GroupUrl);
-  }
+  // getAllGroups(): Observable<any>{
+  //   return this.http.get<any[]>(this.GroupUrl);
+  // }
 
   addNewGroup(Group: Group): Observable<Group> {
     console.log('addNewGroup: ' + Group.name);

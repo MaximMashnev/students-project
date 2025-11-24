@@ -70,10 +70,19 @@ section {
 }
 
 .button-add {
-  margin: 10px;
+  margin-right: 10px;
+  height: 57px;
 }
 
 .mat-add-btn {
   background-color: green;
   color: white;
+}
+
+.group-select-container {
+  width: 200px;
+}
+
+.full-width {
+  width: 100%;
 }

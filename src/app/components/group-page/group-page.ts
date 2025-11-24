@@ -83,10 +83,6 @@ export class GroupPage implements OnInit {
     });
   }
 
-  getGroups() {
-    this.allGroups = this.groupService.getAllGroups().subscribe();
-  }
-
   saveOrEditGroup() {
     this.group["name"] = this.nameGroup;
     if (this.selectedGroupId == 0) {
