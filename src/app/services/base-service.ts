@@ -21,18 +21,14 @@ export class BaseService {
 
     let url = this.UsersUrl + "?";
 
-    // Поиск по номеру
+
     console.log(secectedGroup);
     if (secectedGroup != undefined && secectedGroup != '0') {
       url += `group_id=${secectedGroup}&`
     }
-
+    // Поиск по номеру
     if ((/[0-9]/.test(find)) && find.includes("+")) {
       url += `phoneNumber=${find}&page=${page}&limit=${limit}&sortBy=${sortdata}`;
-    }
-    // Поиск по группе
-    else if (find.length >= 4 && find.includes("-")) {
-      url += `group=${find}&page=${page}&limit=${limit}&sortBy=${sortdata}`;
     }
     // Поиск по id
     else if (/[0-9]/.test(find)) {
@@ -68,14 +64,15 @@ export class BaseService {
     return this.http.delete<User>(this.UsersUrl +`/${User.id}`);
   }
 
-  editingUser(UserData: User, newUserData: User): Observable<User> {
+  editingUser(userData: User, newUserData: User): Observable<User> {
     if (newUserData != null) {
-      newUserData.id = UserData.id;
+      console.log(userData)
+      newUserData.id = userData.id;
       console.log(`editingUser newData: ${newUserData} | ${newUserData}`);
-      return this.http.patch<User>(this.UsersUrl +`/${UserData.id}`, newUserData);
+      return this.http.patch<User>(this.UsersUrl +`/${userData.id}`, newUserData);
     }
     else {
-      return this.http.patch<User>(this.UsersUrl +`/${UserData.id}`, UserData);
+      return this.http.patch<User>(this.UsersUrl +`/${userData.id}`, userData);
     }
   }
 }

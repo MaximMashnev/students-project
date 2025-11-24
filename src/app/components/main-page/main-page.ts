@@ -1,12 +1,13 @@
 import { Title } from '@angular/platform-browser';
-import { Component, OnInit } from '@angular/core';
-import { Router, RouterOutlet, RouterLinkWithHref, RouterLinkActive } from '@angular/router';
+import { Component} from '@angular/core';
+import { Router, RouterOutlet, RouterLinkActive, RouterLinkWithHref} from '@angular/router';
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-main-page',
-  imports: [RouterOutlet, MatIconModule, MatButtonModule, RouterLinkWithHref, RouterLinkActive],
+  imports: [RouterOutlet, MatIconModule, MatButtonModule, RouterLinkActive, RouterLinkWithHref],
   templateUrl: './main-page.html',
   styleUrl: './main-page.css',
 })
@@ -15,8 +16,12 @@ export class MainPage {
   surname = localStorage.getItem("surname");
   patronymic = localStorage.getItem("patronymic");
   role = localStorage.getItem("role");
+  userData!: User;
 
-  constructor(private router: Router, private titleService: Title) {
+  constructor(
+    private router: Router,
+    private titleService: Title,
+  ) {
     this.titleService.setTitle("Главная страница")
     this.isLogin();
   }

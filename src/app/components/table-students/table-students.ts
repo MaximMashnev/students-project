@@ -1,16 +1,14 @@
 import { GroupService } from './../../services/group-service';
 import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule} from '@angular/material/icon';
-import { MatDividerModule} from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { ChangeDetectionStrategy } from "@angular/core";
-import { Sort } from '@angular/material/sort';
 import { NgxScrollTopComponent } from "ngx-scrolltop";
 import { Title } from '@angular/platform-browser';
 import { User } from '../../models/user';
@@ -27,12 +25,12 @@ import { FormsModule} from "@angular/forms";
   imports: [
     MatFormFieldModule, MatInputModule, MatTableModule,
     MatSortModule, MatPaginatorModule, MatButtonModule,
-    MatDividerModule, MatIconModule, NgxScrollTopComponent,
-    MatSelectModule, MatOption, FormsModule,
+    MatIconModule, NgxScrollTopComponent, MatSelectModule,
+    MatOption, FormsModule,
 ],
 })
 export class TableStudents implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'surname', 'name',  'patronymic', 'group', 'phoneNumber', 'control'];
+  displayedColumns: string[] = ['id', 'surname', 'name',  'patronymic', 'group', 'phoneNumber', 'role', 'control'];
   dataSource = new MatTableDataSource<User>([]);
   page = 0;
   limit = 5;

@@ -14,10 +14,6 @@ export class GroupService {
 
   constructor(private http: HttpClient) { }
 
-  // getMyGroup(userGroupId: number): Observable<any> {
-  //   return this.http.get<any>(this.GroupUrl + "?_relations=users&id=" + userGroupId);
-  // }
-
   getMyGroup(userGroupId: number): Observable<any> {
     return this.http.get<any>(this.MyGroupUrl + "?_relations=groups&group_id=" + userGroupId);
   }
@@ -25,10 +21,6 @@ export class GroupService {
   getStudentsGroup(): Observable<Group> {
     return this.http.get<Group>(this.GroupUrl + "?_relations=user");
   }
-
-  // getAllGroups(): Observable<any>{
-  //   return this.http.get<any[]>(this.GroupUrl);
-  // }
 
   addNewGroup(Group: Group): Observable<Group> {
     console.log('addNewGroup: ' + Group.name);

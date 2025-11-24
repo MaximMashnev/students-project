@@ -39,15 +39,6 @@ export class AuthService {
     return this.http.get(
       this.baseUrl + "auth_me"
     )
-    // const userInfo = this.http.get(
-    //   this.baseUrl + "auth_me"
-    // )
-
-    // console.log(userInfo);
-
-    // return this.http.get(
-    //   this.baseUrl + '_relations=groups&id=' + userInfo
-    // )
   }
 
   getMyInfo(): Observable<any> {
