@@ -59,10 +59,10 @@ export class Authorization implements AfterContentInit {
       next: (loginData) => {
         localStorage.setItem("Bearer", loginData.token);
         console.log('Login successful');
+        console.log(loginData);
         Object.entries(loginData.data).forEach(
           ([key, value]) => localStorage.setItem(key, `${value}`)
         );
-
         this.router.navigate(['/main']);
       },
       error: (error) => {

@@ -5,9 +5,12 @@
 >
   <h1 class="h1">Регистрация</h1>
 
-  <div class="alert error">
-    {{errorMessage}}
-  </div>
+  @if (isError) {
+    <div class="alert error">
+      {{errorMessage}}
+    </div>
+  }
+
 
   <label class="inf-text-label">Информация о пользователе</label>
 
