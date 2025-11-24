@@ -1,5 +1,5 @@
 import { GroupService } from './../../services/group-service';
-import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormsModule } from "@angular/forms";
 import { Group } from '../../models/group';
@@ -12,19 +12,34 @@ import { User } from '../../models/user';
 import { MatIconModule } from "@angular/material/icon";
 import { DialogEdit } from '../dialog-edit-user/dialog-edit';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
+import { NgxScrollTopComponent } from "ngx-scrolltop";
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { BaseService } from '../../services/base-service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-group-page',
   imports: [
     FormsModule, MatFormField, MatFormFieldModule,
-    MatSelectModule, MatInputModule,
-    MatIconModule, MatTableModule],
+    MatSelectModule, MatInputModule, MatIconModule,
+    MatTableModule, MatSortModule, MatPaginatorModule,
+    NgxScrollTopComponent, MatButtonModule,
+],
   templateUrl: './group-page.html',
   styleUrl: './group-page.css',
 })
 export class GroupPage implements OnInit {
   displayedColumns: string[] = ['id', 'surname', 'name',  'patronymic', 'group', 'phoneNumber', 'control'];
   dataSource = new MatTableDataSource<User>([]);
+  page = 0;
+  limit = 5;
+  totalItems!: number;
+  filterValue: string = "";
+  defSort: Sort = { active: 'id', direction: 'asc' };
+  timeout: any;
+  selectedGroupInFilter: any;
+  groups: any;
 
   group: Group;
   allGroups: any;
@@ -34,16 +49,21 @@ export class GroupPage implements OnInit {
   selectedGroupId: number = 0;
   saveEditBtn: string = "Создать";
   btnDisabled: boolean = true;
-  baseService: any;
   role = localStorage.getItem("role");
+
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  @ViewChild(MatSort) sort?: MatSort;
 
   constructor (
     private titleService: Title,
     private groupService: GroupService,
     public dialog: MatDialog,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private baseService: BaseService,
   ) {
     this.group = new Group();
+    this.loadData();
+    this.getGroupInfo();
   }
 
   ngOnInit() {
@@ -51,7 +71,13 @@ export class GroupPage implements OnInit {
     this.getRelationsGroups();
     this.loadData();
     if (this.role == "student") {
+      this.displayedColumns = ['id', 'surname', 'name',  'patronymic', 'phoneNumber'];
+    }
+    else if (this.role == "teacher") {
       this.displayedColumns = ['id', 'surname', 'name',  'patronymic', 'group', 'phoneNumber'];
+    }
+    else {
+      this.displayedColumns = ['id', 'surname', 'name',  'patronymic', 'group', 'phoneNumber', 'control'];
     }
   }
 
@@ -103,12 +129,56 @@ export class GroupPage implements OnInit {
     )
   }
 
-  loadData() {
-    this.groupService.getMyGroup(<number> <unknown> localStorage.getItem("group_id")).subscribe(data => {
-      this.dataSource = new MatTableDataSource(data);
-      console.log(this.dataSource);
+  update(event: PageEvent) {
+    const isSizeChanged = this.limit != event.pageSize;
+
+    this.limit = event.pageSize;
+    const newPage = isSizeChanged ? 0 : event.pageIndex;
+    if (isSizeChanged) this.paginator?.firstPage();
+
+    this.loadData(newPage, this.limit);
+  }
+
+  getGroupInfo() {
+    this.groupService.getStudentsGroup().subscribe(data => {
+      this.groups = data;
+    })
+  }
+
+  loadData(page: number = this.page, limit: number = this.limit) {
+    const sortField = this.getSortField();
+    const filter = this.filterValue?.trim() || '';
+    if (this.role == "student" || this.role == "teacher" ) {
+      this.selectedGroupInFilter = Number(localStorage.getItem('group_id'));
+    }
+
+    this.baseService.getDataTable(filter, page, limit, sortField, this.selectedGroupInFilter).subscribe(data => {
+      console.log(data);
+      this.dataSource = new MatTableDataSource(data.items);
+      this.totalItems = data.meta.total_items;
+      this.limit = data.meta.per_page;
       this.cdr.detectChanges();
     });
+  }
+
+  getSortField(): string {
+    if (!this.defSort.direction) return 'id';
+    return this.defSort.direction == 'asc' ? this.defSort.active : '-' + this.defSort.active;
+  }
+
+  sortData(sort: Sort) {
+    this.defSort = sort;
+    this.loadData();
+    this.paginator?.firstPage();
+  }
+
+  applyFilter() {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.getGroupInfo();
+      this.loadData();
+      this.paginator?.firstPage();
+    }, 1000);
   }
 
   openDialogEditAndAdd(UserData: User | any) {
@@ -125,16 +195,7 @@ export class GroupPage implements OnInit {
           this.baseService.editingUser(UserData, result).subscribe(() => this.loadData());
         }
       }
-    });
-  }
-
-  hideBtn() {
-    if (localStorage.getItem("role") == "student") {
-      return false;
-    }
-    else {
-      return true;
-    }
+    })
   }
 
   addNewUser() {
