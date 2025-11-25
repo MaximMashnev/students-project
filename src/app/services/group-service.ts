@@ -2,7 +2,6 @@ import { Group } from './../models/group';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +15,10 @@ export class GroupService {
 
   getMyGroup(userGroupId: number): Observable<any> {
     return this.http.get<any>(this.MyGroupUrl + "?_relations=groups&group_id=" + userGroupId);
+  }
+
+  getAllGroups(): Observable<Group> {
+    return this.http.get<Group>(this.GroupUrl);
   }
 
   getStudentsGroup(): Observable<Group> {

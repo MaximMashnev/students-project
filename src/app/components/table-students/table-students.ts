@@ -38,7 +38,7 @@ export class TableStudents implements AfterViewInit {
   filterValue: string = "";
   defSort: Sort = { active: 'id', direction: 'asc' };
   timeout: any;
-  selectedGroup: any;
+  selectedGroup: string = '0';
   groups: any;
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
@@ -73,13 +73,11 @@ export class TableStudents implements AfterViewInit {
     const filter = this.filterValue?.trim() || '';
 
     this.baseService.getDataTable(filter, page, limit, sortField, this.selectedGroup).subscribe(data => {
-      console.log(data);
       this.dataSource = new MatTableDataSource(data.items);
       this.totalItems = data.meta.total_items;
       this.limit = data.meta.per_page;
       this.cdr.detectChanges();
     });
-
   }
 
   getSortField(): string {
@@ -130,17 +128,14 @@ export class TableStudents implements AfterViewInit {
   }
 
   addNewUser() {
-    console.log("addNewUser");
     this.openDialogEditAndAdd(null);
   }
 
   delUser(User: User) {
-    console.log("del User: " + User);
     this.baseService.deleteUser(User).subscribe(() => this.loadData(this.page, this.limit));
   }
 
   editUser(User: User) {
-    console.log("edit User: " + User);
     this.openDialogEditAndAdd(User);
   }
 }

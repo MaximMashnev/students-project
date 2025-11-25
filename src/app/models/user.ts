@@ -6,7 +6,7 @@ export class User {
     this.surname = "";
     this.patronymic = "";
     this.phoneNumber = "";
-    this.group_id = [];
+    this.group_id = 0;
   }
 
   id: number | null;
@@ -15,5 +15,5 @@ export class User {
   surname: string;
   patronymic: string;
   phoneNumber: string;
-  group_id!: number[];
+  group_id!: number;
 }

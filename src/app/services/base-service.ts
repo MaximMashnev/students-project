@@ -16,7 +16,6 @@ export class BaseService {
 
 
   getDataTable(find: string, page: number, limit: number, sortdata: string, secectedGroup: string): Observable<any> {
-    console.log("find: " + find.length);
     page += 1;
 
     let url = this.UsersUrl + "?";
@@ -53,20 +52,16 @@ export class BaseService {
   }
 
   addNewUser(User: User): Observable<User> {
-    console.log('addNewUser: ' + User);
     return this.http.post<User>(this.UsersUrl, User);
   }
 
   deleteUser(User: User): Observable<User> {
-    console.log("deleteUser");
     return this.http.delete<User>(this.UsersUrl +`/${User.id}`);
   }
 
   editingUser(userData: User, newUserData: User): Observable<User> {
     if (newUserData != null) {
-      console.log(userData)
       newUserData.id = userData.id;
-      console.log(`editingUser newData: ${newUserData} | ${newUserData}`);
       return this.http.patch<User>(this.UsersUrl +`/${userData.id}`, newUserData);
     }
     else {

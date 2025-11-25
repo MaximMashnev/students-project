@@ -153,7 +153,6 @@ export class GroupPage implements OnInit {
     }
 
     this.baseService.getDataTable(filter, page, limit, sortField, this.selectedGroupInFilter).subscribe(data => {
-      console.log(data);
       this.dataSource = new MatTableDataSource(data.items);
       this.totalItems = data.meta.total_items;
       this.limit = data.meta.per_page;
@@ -199,17 +198,14 @@ export class GroupPage implements OnInit {
   }
 
   addNewUser() {
-    console.log("addNewUser");
     this.openDialogEditAndAdd(null);
   }
 
   delUser(User: User) {
-    console.log("del User: " + User);
     this.baseService.deleteUser(User).subscribe(() => this.loadData());
   }
 
   editUser(User: User) {
-    console.log("edit User: " + User);
     this.openDialogEditAndAdd(User);
   }
 }
