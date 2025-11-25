@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{dialogTitle}}</h1>
+<h1 mat-dialog-title style="font-size: 18px;">{{dialogTitle}}</h1>
 <div mat-dialog-content style="display: inline; padding: 20px; margin: auto; ">
 
   <mat-form-field class="full-width-input">
@@ -26,11 +26,12 @@
   </mat-form-field>
 
   @if (userRole == "admin") {
-    <!-- TODO: сделать комбо бокс для выбора группы -->
-    <!-- Починить вывод групп \ запись идет строкой, а не массивом -->
     <mat-form-field class="full-width-input">
-      <input matInput type="text" placeholder="Группа" [value]="editingUser.group_id"
-        [(ngModel)]="editingUser.group_id" required>
+      <mat-select [(ngModel)]="editingUser.group_id" placeholder="Группа">
+          @for (group of groups; track group.id) {
+            <mat-option [value]="group.id">{{group.name}}</mat-option>
+          }
+      </mat-select>
     </mat-form-field>
   }
 
@@ -41,9 +42,9 @@
 
   @if (userRole == "admin") {
     <mat-form-field class="full-width-input">
-      <mat-select [(ngModel)]="editingUser.role" placeholder="Группа пользователя">
+      <mat-select [(ngModel)]="editingUser.role" placeholder="Роль">
           @for (role of ROLES; track role.id) {
-            <mat-option sele [value]="role.role">{{role.name_ru}}</mat-option>
+            <mat-option [value]="role.role">{{role.name_ru}}</mat-option>
           }
       </mat-select>
     </mat-form-field>

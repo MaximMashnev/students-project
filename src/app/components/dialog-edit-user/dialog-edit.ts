@@ -1,5 +1,6 @@
+import { GroupService } from './../../services/group-service';
 import { User } from './../../models/user';
-import { Component, Inject, ChangeDetectorRef } from '@angular/core';
+import { Component, Inject, ChangeDetectorRef, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef,  MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { FormsModule} from "@angular/forms";
@@ -20,15 +21,16 @@ import { MatSelectModule, MatOption } from '@angular/material/select';
   ]
 })
 
-export class DialogEdit {
+export class DialogEdit implements OnInit {
   editingUser: User;
   user: any;
-  userRole: any;
+  userRole = localStorage.getItem("role");
   dialogTitle = 'Добавить студента';
   dialogCloseButton = 'Добавить';
   validNameInput = false;
   validSurnameInput = false;
   validPatronymicInput = false;
+  groups!: any;
 
   ROLES = [
     {
@@ -50,17 +52,18 @@ export class DialogEdit {
 
   constructor(
     public dialogRef: MatDialogRef<DialogEdit>,
-    @Inject(MAT_DIALOG_DATA) public data: User) {
+    @Inject(MAT_DIALOG_DATA) public data: User,
+    private groupService: GroupService,
+  ) {
       this.editingUser = data ? {...data} : new User();
       this.user = data;
-      this.userRole = data.role;
       if (data) {
         if (this.editingUser.group_id === undefined) {
-          this.dialogTitle = `Редактирование профиля`;
+          this.dialogTitle = 'Редактирование профиля';
           if (this.user.group.id === undefined) {
-            this.user.group.id = localStorage.getItem("group_id")
+            this.user.group.id = localStorage.getItem("group_id");
           }
-          this.editingUser.group_id = [this.user.group.id];
+          this.editingUser.group_id = this.user.group.id;
           this.user.group_id = this.editingUser.group_id;
           delete this.user.group;
           this.editingUser = this.user;
@@ -71,6 +74,16 @@ export class DialogEdit {
         this.dialogCloseButton = 'Сохранить';
       }
     }
+
+  ngOnInit(): void {
+    this.getGroups();
+  }
+
+  getGroups() {
+    this.groupService.getAllGroups().subscribe(data => {
+      this.groups = data;
+    });
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
