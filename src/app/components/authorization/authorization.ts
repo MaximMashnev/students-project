@@ -43,7 +43,6 @@ export class Authorization implements AfterContentInit {
   }
 
   ngAfterContentInit(): void {
-    //  TODO: не перебрасывать на страницу с авторизацией, если токен равен undefined
     const token = localStorage.getItem("Bearer");
     if (token) {
       this.router.navigate(['/main']);
@@ -67,11 +66,16 @@ export class Authorization implements AfterContentInit {
       },
       error: (error) => {
         this.isError = true;
-        this.errorMessage = error.error.message;
+        this.setErrorText(error.error.message);
         this.cdr.detectChanges();
         console.error('Login failed', error);
       }
     });
+  }
+
+  setErrorText(error: string): void{
+    if (error == "RESOURCE_INVALID_LOGIN_OR_PASSWORD") this.errorMessage = "Неверный логин или пароль";
+    else this.errorMessage = error;
   }
 
   onRegister(): void {
