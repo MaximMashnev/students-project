@@ -4,6 +4,10 @@
   grid-template-columns: 200px auto;
 }
 
+:host.has-closed-menu {
+  grid-template-columns: 100px auto;
+}
+
 aside {
   grid-area: as;
   height: 100vh;
@@ -57,10 +61,11 @@ article {
 
 .btn-hide {
   display: flex;
-  justify-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   text-align: center;
 }
 
-/* .text-on-btn {
+.closed {
   display: none;
-} */
+}

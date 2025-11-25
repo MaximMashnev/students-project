@@ -1,43 +1,52 @@
 <aside>
-  <!-- <div class="btn-hide">
-    <button class="btn" id="hide-btns">
-      <mat-icon><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#4B77D1"><path d="M440-280v-400L240-480l200 200Zm80 160h80v-720h-80v720Z"/></svg></mat-icon>
-      <span class="text-on-btn">Свернуть меню</span>
+  <div class="btn-hide">
+    <button class="btn" (click)="setArrowMenu()" [title]="openedMenu ? 'Свернуть меню': 'Раскрыть меню'">
+      @if (openedMenu) {
+        <mat-icon><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="rgb(111, 132, 132)"><path d="M440-280v-400L240-480l200 200Zm80 160h80v-720h-80v720Z"/></svg></mat-icon>
+        <span class="text-on-btn">Свернуть</span>
+      }
+      @else {
+        <mat-icon><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="rgb(111, 132, 132)"><path d="M360-120v-720h80v720h-80Zm160-160v-400l200 200-200 200Z"/></svg></mat-icon>
+      }
     </button>
-  </div> -->
-  <div class="user-panel">
-      <span class="fio-user">
-        {{surname}} {{name}} {{patronymic}}
-      </span>
+  </div>
+
+  <div class="user-panel" [style.visibility]="openedMenu ? 'visible': 'hidden'">
+    <span class="fio-user">
+      {{surname}} {{name}} {{patronymic}}
+    </span>
   </div>
 
   <div class="btn-panel">
-    <button class="btn" routerLink="profile" routerLinkActive="active-link">
+
+    <button class="btn" routerLink="profile" routerLinkActive="active-link" title="Профиль">
       <mat-icon>account_circle</mat-icon>
-      <span class="text-on-btn">Профиль</span>
+      <span [className]="openedMenu ? 'text-on-btn': 'text-on-btn closed'">Профиль</span>
     </button>
 
-    <button class="btn" routerLink="group" routerLinkActive="active-link">
+    <button class="btn" routerLink="group" routerLinkActive="active-link" title="Группа">
       <mat-icon>group</mat-icon>
-      <span class="text-on-btn">Группа</span>
+      <span [className]="openedMenu ? 'text-on-btn': 'text-on-btn closed'">Группа</span>
     </button>
 
     @if (hasRole("admin")) {
-      <button class="btn" routerLink="students" routerLinkActive="active-link">
+      <button class="btn" routerLink="students" routerLinkActive="active-link" title="Люди">
         <mat-icon>diversity_3</mat-icon>
-        <span class="text-on-btn">Люди</span>
+        <span [className]="openedMenu ? 'text-on-btn': 'text-on-btn closed'">Люди</span>
       </button>
     }
 
   </div>
 
   <div class="other-block">
-    <button class="btn" (click)="logoutUser()" routerLink="auth" routerLinkActive="active-link">
+    <button class="btn" (click)="logoutUser()" routerLink="auth" routerLinkActive="active-link" title="Выйти">
       <mat-icon>logout</mat-icon>
-      <span class="text-on-btn">Выйти</span>
+      <span [className]="openedMenu ? 'text-on-btn': 'text-on-btn closed'">Выйти</span>
     </button>
   </div>
+
 </aside>
+
 <article>
   <router-outlet></router-outlet>
 </article>

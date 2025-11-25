@@ -1,6 +1,6 @@
 import { AuthService } from './../../services/auth-service';
 import { Title } from '@angular/platform-browser';
-import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, Input, HostBinding } from '@angular/core';
 import { Router, RouterOutlet, RouterLinkActive, RouterLinkWithHref} from '@angular/router';
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
@@ -18,6 +18,12 @@ export class MainPage implements OnInit {
   patronymic!: string;
   role = localStorage.getItem("role");
   userData!: User;
+  openedMenu: boolean = true;
+
+  @HostBinding('class.has-closed-menu')
+  get hasClosedMenuClass(): boolean {
+    return !this.openedMenu;
+  }
 
   constructor(
     private router: Router,
@@ -38,6 +44,10 @@ export class MainPage implements OnInit {
     if (!token) {
       this.router.navigate(['/auth']);
     }
+  }
+
+  setArrowMenu () {
+    this.openedMenu = !this.openedMenu;
   }
 
   logoutUser() {
