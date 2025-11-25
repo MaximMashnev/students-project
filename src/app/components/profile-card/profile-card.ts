@@ -2,13 +2,13 @@ import { User } from './../../models/user';
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../../services/auth-service';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEdit } from '../dialog-edit-user/dialog-edit';
 import { BaseService } from '../../services/base-service';
+import { MainPage } from '../main-page/main-page';
 
 @Component({
   selector: 'app-profile-card',
@@ -25,6 +25,7 @@ export class ProfileCard {
     public dialog: MatDialog,
     private cdr: ChangeDetectorRef,
     private baseService: BaseService,
+    private mainPage: MainPage
   ) {
     this.titleService.setTitle('Профиль');
     this.getLocalStorage();
@@ -32,7 +33,7 @@ export class ProfileCard {
 
   setLocalStorage() {
     for (let key in localStorage) {
-      if (localStorage.getItem(key) != null) {
+      if (localStorage.getItem(key) != null && key != "Bearer" && this.userData[key] !== undefined) {
         localStorage.setItem(key, this.userData[key]);
       }
     }
@@ -48,23 +49,11 @@ export class ProfileCard {
       }
       this.authService.getMyInfo().subscribe({
         next: (data) => {
-          this.userData = data['0'];
-          localStorage.setItem('group_name', data['0'].group.name)
+          this.userData = data[0];
+          localStorage.setItem('group_name', data['0'].group.name);
         }
       })
     }
-  }
-
-  // передает неверные данные, данные всегда от пользователя id = 1
-  getInfoAboutUser() {
-    this.authService.getUserInfo().subscribe({
-      next: (data) => {
-        this.userData = data;
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    })
   }
 
   openDialogEditUser() {
@@ -74,10 +63,11 @@ export class ProfileCard {
     });
     dialogAddingNewUser.afterClosed().subscribe((result: User) => {
       if(result != null) {
-        this.baseService.editingUser(this.userData, result).subscribe(() => {
-          this.userData = result;
-          result.group_id = this.userData.group;
+        this.baseService.editingUser(this.userData, result).subscribe((data) => {
+          this.userData = data;
           this.setLocalStorage();
+          this.getLocalStorage();
+          this.mainPage.getFIO();
           this.cdr.detectChanges();
         });
       }

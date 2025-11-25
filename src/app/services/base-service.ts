@@ -21,8 +21,6 @@ export class BaseService {
 
     let url = this.UsersUrl + "?";
 
-
-    console.log(secectedGroup);
     if (secectedGroup != undefined && secectedGroup != '0') {
       url += `group_id=${secectedGroup}&`
     }

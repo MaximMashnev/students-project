@@ -35,16 +35,9 @@ export class AuthService {
       });
   }
 
-  getUserInfo(): Observable<any> {
-    return this.http.get(
-      this.baseUrl + "auth_me"
-    )
-  }
-
   getMyInfo(): Observable<any> {
     return this.http.get(
       this.baseUrl + 'users?_relations=groups&id=' + localStorage.getItem("id")
     )
   }
-
 }

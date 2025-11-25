@@ -25,11 +25,11 @@
       }
   </mat-form-field>
 
-  @if (editingUser.role == "admin") {
+  @if (userRole == "admin") {
     <!-- TODO: сделать комбо бокс для выбора группы -->
-    <!-- TODO: Починить вывод групп \ запись идет строкой, а не массивом -->
+    <!-- Починить вывод групп \ запись идет строкой, а не массивом -->
     <mat-form-field class="full-width-input">
-      <input matInput type="text" placeholder="Группа" [value]="editingUser.group_id.toLocaleString()"
+      <input matInput type="text" placeholder="Группа" [value]="editingUser.group_id"
         [(ngModel)]="editingUser.group_id" required>
     </mat-form-field>
   }
@@ -39,7 +39,7 @@
       [(ngModel)]="editingUser.phoneNumber" required>
   </mat-form-field>
 
-  @if (editingUser.role == "admin") {
+  @if (userRole == "admin") {
     <mat-form-field class="full-width-input">
       <mat-select [(ngModel)]="editingUser.role" placeholder="Группа пользователя">
           @for (role of ROLES; track role.id) {
