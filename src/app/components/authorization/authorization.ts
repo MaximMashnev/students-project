@@ -53,24 +53,25 @@ export class Authorization implements AfterContentInit {
     // TODO: изменить сохранение данных, т.к. localStorage можно легко редачить
     this.isError = false;
     console.log('Login attempt:', this.form.value.login, this.form.value.password!);
-
-    this.AuthService.getToken(this.form.value.login!, this.form.value.password!).subscribe({
-      next: (loginData) => {
-        localStorage.setItem("Bearer", loginData.token);
-        console.log('Login successful');
-        console.log(loginData);
-        Object.entries(loginData.data).forEach(
-          ([key, value]) => localStorage.setItem(key, `${value}`)
-        );
-        this.router.navigate(['/main']);
-      },
-      error: (error) => {
-        this.isError = true;
-        this.setErrorText(error.error.message);
-        this.cdr.detectChanges();
-        console.error('Login failed', error);
-      }
-    });
+    if (!this.validateUsername()) {
+      this.AuthService.getToken(this.form.value.login!, this.form.value.password!).subscribe({
+        next: (loginData) => {
+          localStorage.setItem("Bearer", loginData.token);
+          console.log('Login successful');
+          console.log(loginData);
+          Object.entries(loginData.data).forEach(
+            ([key, value]) => localStorage.setItem(key, `${value}`)
+          );
+          this.router.navigate(['/main']);
+        },
+        error: (error) => {
+          this.isError = true;
+          this.setErrorText(error.error.message);
+          this.cdr.detectChanges();
+          console.error('Login failed', error);
+        }
+      });
+    }
   }
 
   setErrorText(error: string): void{
@@ -81,5 +82,17 @@ export class Authorization implements AfterContentInit {
   onRegister(): void {
     console.log("registration")
     this.router.navigate(['/registration']);
+  }
+
+  validateUsername(): boolean {
+    if (this.form.value.login!.includes(' ') || this.form.value.login! == '') {
+      this.isError = true;
+      this.setErrorText('Данные не могут быть пустыми и содержать пробелы');
+      return true;
+    }
+    else {
+      this.isError = false;
+      return false;
+    }
   }
 }
