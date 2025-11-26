@@ -36,13 +36,15 @@
         }
     </mat-form-field>
 
-    @if (role == "admin") {
+    @if (role == "admin" || role == "teacher") {
       <div class="group-select-container">
         <mat-form-field class="full-width">
           <mat-select [(ngModel)]="selectedGroupInFilter" placeholder="Выберите группу" (selectionChange)="applyFilter()">
             <mat-option [value]="0">-</mat-option>
             @for (group of groups; track group.id) {
-              <mat-option [value]="group.id">{{group.name}}</mat-option>
+              @if (selectedGroupInFilter == group.id && role == "teacher") {
+                <mat-option [value]="group.id">{{group.name}}</mat-option>
+              }
             }
           </mat-select>
         </mat-form-field>
